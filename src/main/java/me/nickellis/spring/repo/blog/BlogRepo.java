@@ -1,17 +1,14 @@
 package me.nickellis.spring.repo.blog;
 
-import io.reactivex.Observable;
-import io.reactivex.Single;
-
 import java.util.List;
 
 public interface BlogRepo {
 
-  public Observable<Blog> getBlogBy(long id);
-  public Single<List<Blog>> getBlogs();
-  public Single<List<Blog>> searchBlogsBy(String keywords);
-  public Observable<Blog> createBlog(String title, String content);
-  public Observable<Blog> updateBlog(String title, String content);
-  public boolean deleteBlog(long id);
+  Blog getBlogBy(long id);
+  List<Blog> getBlogs();
+  List<Blog> searchBlogsBy(String keywords);
+  Blog createBlog(String title, String content);
+  Blog updateBlog(String title, String content);
+  boolean deleteBlog(long id);
 
 }
