@@ -19,7 +19,7 @@ public class BlogController {
   private BlogRepo repository = MockBlogRepo.getInstance();
 
   @GetMapping("/blogs")
-  public List<Blog> getBlogs(@RequestParam("keywords") String keywords) {
+  public List<Blog> getBlogs(@RequestParam(value = "keywords", required = false) String keywords) {
     if (keywords == null || keywords.isEmpty()) {
       return repository.getBlogs();
     } else {
