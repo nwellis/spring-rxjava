@@ -42,9 +42,9 @@ public class BlogController {
     }
   }
 
-  @PostMapping("/blogs/")
-  public List<Blog> searchBlogs(@RequestBody BlogSearch body) {
-    return repository.searchBlogsBy(body);
+  @PostMapping("/blogs")
+  public Blog create(@RequestBody Blog body) {
+    return repository.createBlog(body);
   }
 
   private ResponseStatusException blogNotFoundWith(String id) {

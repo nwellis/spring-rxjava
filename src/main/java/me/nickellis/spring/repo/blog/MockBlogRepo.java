@@ -70,8 +70,8 @@ public class MockBlogRepo implements BlogRepo {
   }
 
   @Override
-  public Blog createBlog(String title, String content) {
-    blogs.add(new Blog(idCursor.incrementAndGet(), title, content));
+  public Blog createBlog(Blog blog) {
+    blogs.add(new Blog(idCursor.incrementAndGet(), blog.getTitle(), blog.getContent()));
     return blogs.get(blogs.size() - 1);
   }
 
