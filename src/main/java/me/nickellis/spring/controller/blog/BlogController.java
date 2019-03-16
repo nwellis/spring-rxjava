@@ -2,11 +2,10 @@ package me.nickellis.spring.controller.blog;
 
 import me.nickellis.spring.repo.blog.Blog;
 import me.nickellis.spring.repo.blog.BlogRepo;
+import me.nickellis.spring.repo.blog.BlogSearch;
 import me.nickellis.spring.repo.blog.MockBlogRepo;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -19,13 +18,17 @@ public class BlogController {
 
   private BlogRepo repository = MockBlogRepo.getInstance();
 
-  @RequestMapping("/blogs")
-  public List<Blog> blogs() {
-    return repository.getBlogs();
+  @GetMapping("/blogs")
+  public List<Blog> getBlogs(@RequestParam("keywords") String keywords) {
+    if (keywords == null || keywords.isEmpty()) {
+      return repository.getBlogs();
+    } else {
+      return repository.searchBlogsBy(new BlogSearch(keywords));
+    }
   }
 
-  @RequestMapping("/blogs/{id}")
-  public Blog blog(@PathVariable String id) {
+  @GetMapping("/blogs/{id}")
+  public Blog getBlog(@PathVariable String id) {
     try {
       Optional<Blog> blog = repository.getBlogBy(Long.parseLong(id));
 
@@ -37,6 +40,11 @@ public class BlogController {
     } catch (NumberFormatException ex) {
       throw blogNotFoundWith(id);
     }
+  }
+
+  @PostMapping("/blogs/")
+  public List<Blog> searchBlogs(@RequestBody BlogSearch body) {
+    return repository.searchBlogsBy(body);
   }
 
   private ResponseStatusException blogNotFoundWith(String id) {

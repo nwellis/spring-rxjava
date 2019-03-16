@@ -7,7 +7,7 @@ public interface BlogRepo {
 
   Optional<Blog> getBlogBy(long id);
   List<Blog> getBlogs();
-  List<Blog> searchBlogsBy(String keywords);
+  List<Blog> searchBlogsBy(BlogSearch search);
   Blog createBlog(String title, String content);
   boolean updateBlog(long id, String title, String content);
   boolean deleteBlog(long id);

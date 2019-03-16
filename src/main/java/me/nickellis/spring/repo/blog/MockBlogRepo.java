@@ -55,12 +55,16 @@ public class MockBlogRepo implements BlogRepo {
   }
 
   @Override
-  public List<Blog> searchBlogsBy(String keywords) {
+  public List<Blog> searchBlogsBy(BlogSearch search) {
+    if (search.getKeywords() == null || search.getKeywords().isEmpty()) {
+      return getBlogs();
+    }
+
     return getBlogs()
         .stream()
         .filter(blog ->
-            (blog.getTitle() != null && blog.getTitle().toLowerCase().contains(keywords))
-            || (blog.getContent() != null && blog.getContent().toLowerCase().contains(keywords))
+            (blog.getTitle() != null && blog.getTitle().toLowerCase().contains(search.getKeywords()))
+            || (blog.getContent() != null && blog.getContent().toLowerCase().contains(search.getKeywords()))
         )
         .collect(Collectors.toList());
   }
